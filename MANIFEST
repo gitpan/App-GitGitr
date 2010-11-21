@@ -1,0 +1,16 @@
+CHANGES
+INSTALL
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+bin/gitgitr
+dist.ini
+lib/App/GitGitr/Cmd.pm
+t/00-compile.t
+t/release-eol.t
+t/release-kwalitee.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
