@@ -1,15 +1,13 @@
 package App::GitGitr::Cmd;
-$App::GitGitr::Cmd::VERSION = '0.3';
-BEGIN {
-  $App::GitGitr::Cmd::AUTHORITY = 'cpan:GENEHACK';
-}
-# ABSTRACT: GitGitr command support. See 'gitgitr'.
-use base 'App::Cmd::Simple';
+$App::GitGitr::Cmd::VERSION = '0.4';
+# ABSTRACT: GitGitr command support. See C<gitgitr> for full documentation.
+use parent 'App::Cmd::Simple';
+
+use strict;
+use warnings;
+use 5.010;
 
 use autodie qw/ :all /;
-use strictures 1;
-use strict;
-use 5.010;
 
 use Archive::Extract;
 use Carp;
@@ -18,11 +16,12 @@ use LWP::Simple;
 
 sub opt_spec {
   return (
-    [ "prefix|p"    => 'directory to install under (defaults to /opt/git-$VERSION)' ],
-    [ "reinstall|r" => 'build even if installation directory exists (default=false)' ],
-    [ "run_tests|t" => 'run "make test" after building' ] ,
-    [ "verbose|V"   => 'be verbose about what is being done' ] ,
-    [ "version|v=s" => 'Which git version to build. Default = most recent' ] ,
+    [ "no_symlink|N" => 'do not symlink final build to /opt/git' ],
+    [ "prefix|p"     => 'directory to install under (defaults to /opt/git-$VERSION)' ],
+    [ "reinstall|r"  => 'build even if installation directory exists (default=false)' ],
+    [ "run_tests|t"  => 'run "make test" after building' ] ,
+    [ "verbose|V"    => 'be verbose about what is being done' ] ,
+    [ "version|v=s"  => 'Which git version to build. Default = most recent' ] ,
   );
 }
 
@@ -36,8 +35,13 @@ sub execute {
     if $opt->{verbose};
 
   if ( -e $install_dir and ! $opt->{reinstall} ) {
-    $self->_symlink( $opt , $version );
-    say "Most recent version ($version) already installed at /opt/git";
+      if( $opt->{no_symlink} ) {
+          say "Most recent version ($version) already installed.";
+      }
+      else {
+        $self->_symlink( $opt , $version );
+        say "Most recent version ($version) already installed. /opt/git redirected to that version";
+      }
   }
   else {
     chdir( '/tmp' );
@@ -52,11 +56,12 @@ sub execute {
     $self->_make_test( $opt ) if $opt->{run_tests};
     $self->_make_install( $opt );
     $self->_cleanup( $opt , $version );
-    $self->_symlink( $opt , $version );
+    $self->_symlink( $opt , $version ) unless $opt->{no_symlink};
 
     say "\n\nBuilt new git $version."
       if $opt->{verbose};
-    say "New version ($version) symlinked into /opt/git";
+    say "/opt/git symlink switched to new version ($version)."
+      unless $opt->{no_symlink};
   }
 
   die "No new version?!"
@@ -148,11 +153,11 @@ __END__
 
 =head1 NAME
 
-App::GitGitr::Cmd - GitGitr command support. See 'gitgitr'.
+App::GitGitr::Cmd - GitGitr command support. See C<gitgitr> for full documentation.
 
 =head1 VERSION
 
-version 0.3
+version 0.4
 
 =head1 AUTHOR
 
@@ -160,7 +165,7 @@ John SJ Anderson <genehack@genehack.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by John SJ Anderson.
+This software is copyright (c) 2014 by John SJ Anderson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

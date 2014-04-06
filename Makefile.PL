@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "GitGitr command support. See 'gitgitr'.",
+  "ABSTRACT" => "GitGitr command support. See C<gitgitr> for full documentation.",
   "AUTHOR" => "John SJ Anderson <genehack\@genehack.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -31,19 +31,13 @@ my %WriteMakefileArgs = (
     "IPC::System::Simple" => 0,
     "LWP::Simple" => 0,
     "autodie" => 0,
-    "base" => 0,
     "lib" => 0,
+    "parent" => 0,
     "strict" => 0,
-    "strictures" => 1
-  },
-  "TEST_REQUIRES" => {
-    "File::Spec" => 0,
-    "IO::Handle" => 0,
-    "IPC::Open3" => 0,
-    "Test::More" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.3",
+  "TEST_REQUIRES" => {},
+  "VERSION" => "0.4",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -55,18 +49,13 @@ my %FallbackPrereqs = (
   "Archive::Extract" => 0,
   "Carp" => 0,
   "File::Remove" => 0,
-  "File::Spec" => 0,
   "FindBin" => 0,
-  "IO::Handle" => 0,
-  "IPC::Open3" => 0,
   "IPC::System::Simple" => 0,
   "LWP::Simple" => 0,
-  "Test::More" => 0,
   "autodie" => 0,
-  "base" => 0,
   "lib" => 0,
+  "parent" => 0,
   "strict" => 0,
-  "strictures" => 1,
   "warnings" => 0
 );
 

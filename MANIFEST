@@ -6,13 +6,8 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
-README
-README.mkdn
+README.md
 bin/gitgitr
-dist.ini
 lib/App/GitGitr/Cmd.pm
-lib/App/GitGitr/GitGitr.pm
-t/00-compile.t
-t/release-eol.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
