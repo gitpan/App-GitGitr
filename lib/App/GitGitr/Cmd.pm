@@ -1,5 +1,5 @@
 package App::GitGitr::Cmd;
-$App::GitGitr::Cmd::VERSION = '0.2';
+$App::GitGitr::Cmd::VERSION = '0.3';
 BEGIN {
   $App::GitGitr::Cmd::AUTHORITY = 'cpan:GENEHACK';
 }
@@ -152,7 +152,7 @@ App::GitGitr::Cmd - GitGitr command support. See 'gitgitr'.
 
 =head1 VERSION
 
-version 0.2
+version 0.3
 
 =head1 AUTHOR
 

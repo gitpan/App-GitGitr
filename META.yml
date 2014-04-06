@@ -35,7 +35,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=App-GitGitr
   homepage: http://search.cpan.org/dist/App-GitGitr/
   repository: git://github.com/genehack/app-gitgitr.git
-version: '0.2'
+version: '0.3'
 x_Dist_Zilla:
   perl:
     version: '5.018001'

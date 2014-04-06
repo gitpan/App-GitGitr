@@ -1,12 +1,9 @@
-#! /usr/bin/env perl
-# ABSTRACT: Automatically fetch and build the most recent git.
-# PODNAME: gitgitr
-
-use FindBin;
-use lib "$FindBin::RealBin/../lib";
-
-use App::GitGitr::Cmd;
-App::GitGitr::Cmd->run;
+package App::GitGitr;
+$App::GitGitr::VERSION = '0.3';
+BEGIN {
+  $App::GitGitr::AUTHORITY = 'cpan:GENEHACK';
+}
+# ABSTRACT: This space intentially left blank
 
 __END__
 
@@ -16,7 +13,7 @@ __END__
 
 =head1 NAME
 
-gitgitr - Automatically fetch and build the most recent git.
+App::GitGitr - This space intentially left blank
 
 =head1 VERSION
 
