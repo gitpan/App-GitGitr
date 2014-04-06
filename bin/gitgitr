@@ -1,4 +1,4 @@
-#! /opt/perl/bin/perl
+#! /usr/bin/env perl
 # ABSTRACT: Automatically fetch and build the most recent git.
 # PODNAME: gitgitr
 
@@ -9,7 +9,10 @@ use App::GitGitr::Cmd;
 App::GitGitr::Cmd->run;
 
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -17,7 +20,7 @@ gitgitr - Automatically fetch and build the most recent git.
 
 =head1 VERSION
 
-version 0.1
+version 0.2
 
 =head1 AUTHOR
 
@@ -31,4 +34,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

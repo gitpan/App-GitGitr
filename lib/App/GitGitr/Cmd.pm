@@ -1,13 +1,12 @@
 package App::GitGitr::Cmd;
-BEGIN {
-  $App::GitGitr::Cmd::VERSION = '0.1'; # TRIAL
-}
+$App::GitGitr::Cmd::VERSION = '0.2';
 BEGIN {
   $App::GitGitr::Cmd::AUTHORITY = 'cpan:GENEHACK';
 }
 # ABSTRACT: GitGitr command support. See 'gitgitr'.
 use base 'App::Cmd::Simple';
 
+use autodie qw/ :all /;
 use strictures 1;
 use strict;
 use 5.010;
@@ -19,29 +18,29 @@ use LWP::Simple;
 
 sub opt_spec {
   return (
+    [ "prefix|p"    => 'directory to install under (defaults to /opt/git-$VERSION)' ],
+    [ "reinstall|r" => 'build even if installation directory exists (default=false)' ],
     [ "run_tests|t" => 'run "make test" after building' ] ,
     [ "verbose|V"   => 'be verbose about what is being done' ] ,
-    [ "version|v"   => 'Which git version to build. Default = most recent' ] ,
+    [ "version|v=s" => 'Which git version to build. Default = most recent' ] ,
   );
-}
-
-sub validate_args {
-  my( $self , $opt , $args ) = @_;
-
 }
 
 sub execute {
   my( $self , $opt , $args ) = @_;
 
-  my $version = $opt->{version} // _build_version();
-  my $install_dir = "/opt/git-$version";
+  my $version     = $opt->{version} // _build_version();
+  my $install_dir = $opt->{prefix}  // "/opt/git-$version";
 
   say "CURRENT VERSION: $version"
     if $opt->{verbose};
 
-  unless ( -e $install_dir ) {
-    chdir( '/tmp' )
-      or die "Can't cd to /tmp";
+  if ( -e $install_dir and ! $opt->{reinstall} ) {
+    $self->_symlink( $opt , $version );
+    say "Most recent version ($version) already installed at /opt/git";
+  }
+  else {
+    chdir( '/tmp' );
 
     say "BUILD/INSTALL git-$version"
       if $opt->{verbose};
@@ -53,23 +52,23 @@ sub execute {
     $self->_make_test( $opt ) if $opt->{run_tests};
     $self->_make_install( $opt );
     $self->_cleanup( $opt , $version );
+    $self->_symlink( $opt , $version );
 
     say "\n\nBuilt new git $version."
       if $opt->{verbose};
+    say "New version ($version) symlinked into /opt/git";
   }
 
   die "No new version?!"
     unless -e "/opt/git-$version";
 
-  $self->_symlink( $opt , $version );
-
-  say "New version ($version) symlinked into /opt/git";
 }
 
 sub _build_version {
   my $content = get( 'http://git-scm.com/' );
-  my( $version ) = $content =~ m|<div id="ver">v([\d\.]+)</div>|
-    or croak "Can't parse version from Git web page!";
+  ### FIXME switch to a real fucking parser, dumbass
+  my( $version ) = $content =~ m|<span class='version'>([\d\.]+)</span>|
+    or croak "Can't parse version from Git web page! $content";
   return $version;
 }
 
@@ -77,7 +76,8 @@ sub _download {
   my( $self , $opt , $version ) = @_;
   say "*** download" if $opt->{verbose};
   my $pkg_path = sprintf "git-%s.tar.gz" , $version;
-  my $url = sprintf "http://kernel.org/pub/software/scm/git/%s" , $pkg_path;
+  #my $url = sprintf "http://kernel.org/pub/software/scm/git/%s" , $pkg_path;
+  my $url = sprintf "http://git-core.googlecode.com/files/%s" , $pkg_path;
   my $ret = getstore( $url , $pkg_path );
   die $ret unless $ret eq '200';
   return $pkg_path;
@@ -95,7 +95,8 @@ sub _configure {
   my( $self , $opt , $version , $install_dir ) = @_;
   say "*** configure" if $opt->{verbose};
   chdir "git-$version";
-  _run( "./configure --prefix=$install_dir" );
+  ### FIXME should have some way to allow override of these args
+  _run( "./configure --prefix=$install_dir --without-tcltk" );
 };
 
 sub _make {
@@ -134,14 +135,16 @@ sub _symlink {
 sub _run {
   my $arg = shift;
   $arg .= ' 2>&1 >/dev/null';
-  system( $arg ) == 0
-    or die "$arg failed ($?)";
+  system( $arg ) == 0;
 }
 
 1;
 
 __END__
+
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -149,7 +152,7 @@ App::GitGitr::Cmd - GitGitr command support. See 'gitgitr'.
 
 =head1 VERSION
 
-version 0.1
+version 0.2
 
 =head1 AUTHOR
 
@@ -163,4 +166,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
