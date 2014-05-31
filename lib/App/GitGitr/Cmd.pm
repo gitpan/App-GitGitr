@@ -1,5 +1,5 @@
 package App::GitGitr::Cmd;
-$App::GitGitr::Cmd::VERSION = '0.4';
+$App::GitGitr::Cmd::VERSION = '0.5';
 # ABSTRACT: GitGitr command support. See C<gitgitr> for full documentation.
 use parent 'App::Cmd::Simple';
 
@@ -12,6 +12,7 @@ use autodie qw/ :all /;
 use Archive::Extract;
 use Carp;
 use File::Remove 'remove';
+use HTML::TreeBuilder::XPath;
 use LWP::Simple;
 
 sub opt_spec {
@@ -71,9 +72,11 @@ sub execute {
 
 sub _build_version {
   my $content = get( 'http://git-scm.com/' );
-  ### FIXME switch to a real fucking parser, dumbass
-  my( $version ) = $content =~ m|<span class='version'>([\d\.]+)</span>|
+  my $tree = HTML::TreeBuilder::XPath->new;
+  $tree->parse_content( $content );
+  my $version = $tree->findvalue('/html/body//span[@class="version"]')
     or croak "Can't parse version from Git web page! $content";
+  $version =~ s/^\s*//; $version =~ s/\s*$//;
   return $version;
 }
 
@@ -81,8 +84,8 @@ sub _download {
   my( $self , $opt , $version ) = @_;
   say "*** download" if $opt->{verbose};
   my $pkg_path = sprintf "git-%s.tar.gz" , $version;
-  #my $url = sprintf "http://kernel.org/pub/software/scm/git/%s" , $pkg_path;
-  my $url = sprintf "http://git-core.googlecode.com/files/%s" , $pkg_path;
+  my $url = sprintf "https://kernel.org/pub/software/scm/git/%s" , $pkg_path;
+  #my $url = sprintf "http://git-core.googlecode.com/files/%s" , $pkg_path;
   my $ret = getstore( $url , $pkg_path );
   die $ret unless $ret eq '200';
   return $pkg_path;
@@ -157,7 +160,7 @@ App::GitGitr::Cmd - GitGitr command support. See C<gitgitr> for full documentati
 
 =head1 VERSION
 
-version 0.4
+version 0.5
 
 =head1 AUTHOR
 
