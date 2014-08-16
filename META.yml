@@ -6,7 +6,7 @@ build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: '6.30'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.016, CPAN::Meta::Converter version 2.141170'
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -31,66 +31,66 @@ resources:
   bugtracker: https://github.com/genehack/app-gitgitr/issues
   homepage: http://genehack.github.io/app-gitgitr/
   repository: https://github.com/genehack/app-gitgitr.git
-version: '0.5'
+version: '0.6'
 x_Dist_Zilla:
   perl:
-    version: '5.018001'
+    version: '5.020000'
   plugins:
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: GatherDir
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: '@Filter/PruneCruft'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: '@Filter/ManifestSkip'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: '@Filter/MetaYAML'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::License
       name: '@Filter/License'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: '@Filter/ExtraTests'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: '@Filter/ExecDir'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: '@Filter/ShareDir'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::MakeMaker
       config:
         Dist::Zilla::Role::TestRunner:
           default_jobs: 1
       name: '@Filter/MakeMaker'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::Manifest
       name: '@Filter/Manifest'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::TestRelease
       name: '@Filter/TestRelease'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::ConfirmRelease
       name: '@Filter/ConfirmRelease'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::UploadToCPAN
       name: '@Filter/UploadToCPAN'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::Git::NextVersion
       config:
@@ -101,11 +101,11 @@ x_Dist_Zilla:
         Dist::Zilla::Role::Git::Repo:
           repo_root: .
       name: Git::NextVersion
-      version: '2.022'
+      version: '2.023'
     -
       class: Dist::Zilla::Plugin::AutoPrereqs
       name: AutoPrereqs
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -113,11 +113,11 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: Prereqs
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::GithubMeta
       name: GithubMeta
-      version: '0.44'
+      version: '0.46'
     -
       class: Dist::Zilla::Plugin::InstallGuide
       name: InstallGuide
@@ -125,27 +125,27 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: MetaConfig
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: MetaJSON
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: NextRelease
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::PkgVersion
       name: PkgVersion
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::PodSyntaxTests
       name: PodSyntaxTests
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::PodCoverageTests
       name: PodCoverageTests
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::PodWeaver
       config:
@@ -234,14 +234,14 @@ x_Dist_Zilla:
         Dist::Zilla::Plugin::Git::Tag:
           branch: ~
           signed: 0
-          tag: v0.5
+          tag: v0.6
           tag_format: v%v
           tag_message: v%v
           time_zone: local
         Dist::Zilla::Role::Git::Repo:
           repo_root: .
       name: Git::Tag
-      version: '2.022'
+      version: '2.023'
     -
       class: Dist::Zilla::Plugin::Git::Commit
       config:
@@ -258,7 +258,7 @@ x_Dist_Zilla:
         Dist::Zilla::Role::Git::Repo:
           repo_root: .
       name: Git::Commit
-      version: '2.022'
+      version: '2.023'
     -
       class: Dist::Zilla::Plugin::Twitter
       name: Twitter
@@ -274,37 +274,37 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':AllFiles'
-      version: '5.016'
+      version: '5.019'
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':NoFiles'
-      version: '5.016'
+      version: '5.019'
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: '0'
-    version: '5.016'
+    version: '5.019'

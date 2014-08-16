@@ -1,5 +1,5 @@
 package App::GitGitr::Cmd;
-$App::GitGitr::Cmd::VERSION = '0.5';
+$App::GitGitr::Cmd::VERSION = '0.6';
 # ABSTRACT: GitGitr command support. See C<gitgitr> for full documentation.
 use parent 'App::Cmd::Simple';
 
@@ -160,7 +160,7 @@ App::GitGitr::Cmd - GitGitr command support. See C<gitgitr> for full documentati
 
 =head1 VERSION
 
-version 0.5
+version 0.6
 
 =head1 AUTHOR
 
